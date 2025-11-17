@@ -1,0 +1,62 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches: [ main, master ]
+    paths: [ 'backend/**' ]
+  pull_request:
+    branches: [ main, master ]
+    paths: [ 'backend/**' ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    services:
+      mongodb:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
+          
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: backend/package-lock.json
+        
+    - name: Install dependencies
+      run: |
+        cd backend
+        npm ci
+        
+    - name: Run tests
+      run: |
+        cd backend
+        npm run test
+      env:
+        NODE_ENV: test
+        MONGODB_URI: mongodb://localhost:27017/jigisha-sailor-test
+        JWT_SECRET: test-secret-key
+        
+    - name: Run linting
+      run: |
+        cd backend
+        npm run lint
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Deploy to Render
+      run: |
+        curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
