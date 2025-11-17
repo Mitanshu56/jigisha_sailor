@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { 
@@ -14,6 +14,37 @@ const Hero = () => {
     triggerOnce: true,
     threshold: 0.1
   });
+
+  const [displayedText, setDisplayedText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const fullText = 'Advocate';
+
+  useEffect(() => {
+    if (inView) {
+      const startTyping = () => {
+        setIsTyping(true);
+        let currentIndex = 0;
+        
+        const typingInterval = setInterval(() => {
+          if (currentIndex <= fullText.length) {
+            setDisplayedText(fullText.slice(0, currentIndex));
+            currentIndex++;
+          } else {
+            clearInterval(typingInterval);
+            setIsTyping(false);
+            
+            // Wait 2 seconds before restarting
+            setTimeout(() => {
+              setDisplayedText('');
+              startTyping();
+            }, 2000);
+          }
+        }, 200); // Typing speed - 200ms per character
+      };
+      
+      startTyping();
+    }
+  }, [inView]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -142,23 +173,26 @@ const Hero = () => {
         >
           {/* Left Content */}
           <motion.div
-            className="space-y-8 lg:pr-12 xl:pr-16"
+            className="space-y-8 lg:pr-12 xl:pr-16 mt-12 lg:mt-20"
             variants={leftVariants}
           >
-            {/* Badge */}
-            <motion.div
-              className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-6 py-3 border border-white/20"
-              variants={textVariants}
-              whileHover={{ scale: 1.05 }}
-            >
-              <SparklesIcon className="w-5 h-5 text-gold-400" />
-              <span className="text-white font-medium">Professional Legal Services</span>
-            </motion.div>
-
             {/* Main Heading */}
             <motion.div variants={textVariants} className="space-y-4">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-playfair font-bold text-white leading-tight hero-text-shadow">
-                <span className="block">Advocate</span>
+                <span className="block">
+                  {displayedText}
+                  <motion.span
+                    className="inline-block w-1 h-12 md:h-14 lg:h-16 bg-gold-400 ml-2"
+                    animate={{
+                      opacity: [1, 0, 1]
+                    }}
+                    transition={{
+                      duration: 0.8,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  />
+                </span>
                 <span className="block text-gradient">Jigisha T. Sailor</span>
               </h1>
               

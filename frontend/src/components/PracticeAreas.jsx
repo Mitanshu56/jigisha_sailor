@@ -146,7 +146,7 @@ const PracticeAreas = () => {
               </h2>
               <ScaleIcon className="w-8 h-8 text-gold-500 ml-4" />
             </div>
-            <p className="text-lg text-charcoal-700 dark:text-charcoal-300 leading-relaxed">
+            <p className="text-lg text-charcoal-700 dark:text-gray-100 leading-relaxed">
               Comprehensive legal services across multiple practice areas, 
               providing expert representation and consultation with dedicated focus on women's rights and family law.
             </p>
@@ -161,7 +161,7 @@ const PracticeAreas = () => {
                 className="group"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className={`card p-8 h-full relative overflow-hidden group-hover:shadow-2xl transition-all duration-500 bg-gradient-to-br ${area.bgGradient} dark:${area.darkBgGradient} dark:bg-charcoal-900 border-l-4 border-transparent group-hover:border-gold-500`}>
+                <div className={`card p-8 h-full relative overflow-hidden group-hover:shadow-2xl transition-all duration-500 bg-gradient-to-br ${area.bgGradient} dark:bg-white border-l-4 border-transparent group-hover:border-gold-500`}>
                   {/* Hover Gradient Overlay */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${area.accent} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
                   
@@ -175,11 +175,11 @@ const PracticeAreas = () => {
 
                   {/* Content */}
                   <div className="relative z-10 space-y-4">
-                    <h3 className="text-2xl font-playfair font-semibold text-charcoal-900 dark:text-white group-hover:text-gold-600 dark:group-hover:text-gold-400 transition-colors duration-300">
+                    <h3 className="text-2xl font-playfair font-semibold text-charcoal-900 dark:text-charcoal-800 group-hover:text-gold-600 dark:group-hover:text-gold-600 transition-colors duration-300">
                       {area.title}
                     </h3>
 
-                    <p className="text-charcoal-700 dark:text-charcoal-300 leading-relaxed">
+                    <p className="text-charcoal-700 dark:text-charcoal-700 leading-relaxed">
                       {area.description}
                     </p>
 
@@ -188,7 +188,7 @@ const PracticeAreas = () => {
                       {area.features.map((feature, featureIndex) => (
                         <motion.li
                           key={featureIndex}
-                          className="flex items-start space-x-3 text-sm text-charcoal-600 dark:text-charcoal-400"
+                          className="flex items-start space-x-3 text-sm text-charcoal-600 dark:text-charcoal-600"
                           initial={{ opacity: 0, x: -10 }}
                           animate={inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
                           transition={{ duration: 0.3, delay: 0.5 + featureIndex * 0.1 }}
@@ -201,10 +201,10 @@ const PracticeAreas = () => {
 
                     {/* CTA */}
                     <motion.div
-                      className="pt-4 border-t border-gray-200 dark:border-charcoal-700"
+                      className="pt-4 border-t border-gray-200 dark:border-gray-300"
                       whileHover={{ x: 5 }}
                     >
-                      <button className="flex items-center space-x-2 text-gold-600 dark:text-gold-400 hover:text-gold-700 dark:hover:text-gold-300 font-medium transition-colors duration-300 group/cta">
+                      <button className="flex items-center space-x-2 text-gold-600 dark:text-gold-700 hover:text-gold-700 dark:hover:text-gold-800 font-medium transition-colors duration-300 group/cta">
                         <span>Learn More</span>
                         <ArrowRightIcon className="w-4 h-4 group-hover/cta:translate-x-1 transition-transform duration-300" />
                       </button>
@@ -221,18 +221,18 @@ const PracticeAreas = () => {
           {/* Special Focus Section */}
           <motion.div
             variants={cardVariants}
-            className="bg-gradient-to-br from-gold-50 to-amber-50 dark:from-gold-900/20 dark:to-amber-900/20 rounded-2xl p-8 md:p-12 border border-gold-200 dark:border-gold-800"
+            className="bg-gradient-to-br from-gold-50 to-amber-50 dark:bg-white rounded-2xl p-8 md:p-12 border border-gold-200 dark:border-gold-300"
           >
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="space-y-6">
                 <div className="flex items-center space-x-3">
                   <HeartIcon className="w-10 h-10 text-gold-600" />
-                  <h3 className="text-3xl font-playfair font-bold text-charcoal-900 dark:text-white">
+                  <h3 className="text-3xl font-playfair font-bold text-charcoal-900 dark:text-charcoal-800">
                     Women Empowerment Focus
                   </h3>
                 </div>
                 
-                <p className="text-lg text-charcoal-700 dark:text-charcoal-300 leading-relaxed">
+                <p className="text-lg text-charcoal-700 dark:text-charcoal-700 leading-relaxed">
                   Special dedication to empowering women through legal advocacy. 
                   I believe every woman should have access to justice and understand her rights completely.
                 </p>
@@ -242,19 +242,19 @@ const PracticeAreas = () => {
                     <div className="w-6 h-6 bg-gold-500 rounded-full flex items-center justify-center">
                       <span className="text-white text-xs font-bold">✓</span>
                     </div>
-                    <span className="text-charcoal-700 dark:text-charcoal-300">Free initial consultation for women in distress</span>
+                    <span className="text-charcoal-700 dark:text-charcoal-700">Free initial consultation for women in distress</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-6 h-6 bg-gold-500 rounded-full flex items-center justify-center">
                       <span className="text-white text-xs font-bold">✓</span>
                     </div>
-                    <span className="text-charcoal-700 dark:text-charcoal-300">24/7 emergency legal support</span>
+                    <span className="text-charcoal-700 dark:text-charcoal-700">24/7 emergency legal support</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <div className="w-6 h-6 bg-gold-500 rounded-full flex items-center justify-center">
                       <span className="text-white text-xs font-bold">✓</span>
                     </div>
-                    <span className="text-charcoal-700 dark:text-charcoal-300">Confidential and compassionate approach</span>
+                    <span className="text-charcoal-700 dark:text-charcoal-700">Confidential and compassionate approach</span>
                   </div>
                 </div>
 
@@ -276,7 +276,7 @@ const PracticeAreas = () => {
 
               <div className="relative">
                 {/* Empowerment Visualization */}
-                <div className="relative w-full h-64 bg-gradient-to-br from-gold-100 to-amber-100 dark:from-gold-900/30 dark:to-amber-900/30 rounded-xl flex items-center justify-center overflow-hidden">
+                <div className="relative w-full h-64 bg-gradient-to-br from-gold-100 to-amber-100 dark:from-gray-700 dark:to-gray-600 rounded-xl flex items-center justify-center overflow-hidden">
                   <motion.div
                     className="text-center space-y-4"
                     animate={{ 
@@ -295,7 +295,7 @@ const PracticeAreas = () => {
                       <h4 className="text-xl font-bold text-charcoal-900 dark:text-white">
                         Justice for All
                       </h4>
-                      <p className="text-charcoal-600 dark:text-charcoal-400">
+                      <p className="text-charcoal-600 dark:text-gray-300">
                         Equal rights, dignified treatment
                       </p>
                     </div>

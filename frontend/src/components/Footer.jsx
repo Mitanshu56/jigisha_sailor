@@ -127,10 +127,10 @@ const Footer = () => {
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="pt-16 pb-8"
+          className="pt-8 pb-4"
         >
           {/* Main Footer Content */}
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8 mb-12">
+          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6 mb-6">
             {/* Brand Section */}
             <motion.div variants={itemVariants} className="lg:col-span-1 space-y-6">
               <div className="flex items-center space-x-3">
@@ -252,103 +252,32 @@ const Footer = () => {
             </motion.div>
           </div>
 
-          {/* Divider */}
-          <motion.div 
-            variants={itemVariants}
-            className="w-full h-px bg-gradient-to-r from-transparent via-gold-500 to-transparent mb-8"
-          ></motion.div>
-
-          {/* Emergency Notice */}
-          <motion.div 
-            variants={itemVariants}
-            className="bg-red-500/10 border border-red-500/30 rounded-2xl p-6 mb-8"
-          >
-            <div className="flex items-start space-x-4">
-              <HeartIcon className="w-8 h-8 text-red-400 flex-shrink-0 mt-1" />
-              <div className="flex-1">
-                <h5 className="text-lg font-semibold text-red-300 mb-2">
-                  Emergency Legal Support
-                </h5>
-                <p className="text-gray-300 leading-relaxed mb-3">
-                  If you're facing an immediate legal emergency, especially related to domestic violence 
-                  or urgent women's rights issues, I'm available 24/7 for emergency consultations.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <a 
-                    href="tel:+91XXXXXXXXX" 
-                    className="inline-flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors duration-300"
-                  >
-                    <PhoneIcon className="w-4 h-4" />
-                    <span>Emergency Hotline</span>
-                  </a>
-                  <button
-                    onClick={() => scrollToSection('#contact')}
-                    className="inline-flex items-center space-x-2 bg-transparent border border-red-500 text-red-400 hover:bg-red-500 hover:text-white px-4 py-2 rounded-lg transition-all duration-300"
-                  >
-                    <EnvelopeIcon className="w-4 h-4" />
-                    <span>Send Message</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
           {/* Bottom Section */}
           <motion.div 
             variants={itemVariants}
-            className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0"
+            className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 pt-4 border-t border-gray-800"
           >
             <div className="text-center md:text-left">
-              <p className="text-gray-300 mb-1">
+              <p className="text-gray-300 text-sm">
                 © {new Date().getFullYear()} Adv. Jigisha T. Sailor. All rights reserved.
-              </p>
-              <p className="text-sm text-gray-400">
-                <span className="italic">"Designed with Strength & Justice"</span> | 
-                Built with ❤️ for empowering women through legal advocacy
               </p>
             </div>
 
             {/* Scroll to Top Button */}
             <motion.button
               onClick={scrollToTop}
-              className="flex items-center space-x-2 bg-gold-500 hover:bg-gold-600 text-white px-6 py-3 rounded-full transition-all duration-300 group"
-              whileHover={{ scale: 1.05, y: -2 }}
+              className="flex items-center space-x-2 bg-gold-500 hover:bg-gold-600 text-white px-4 py-2 rounded-full transition-all duration-300 group"
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               aria-label="Scroll to top"
             >
-              <span className="text-sm font-medium">Back to Top</span>
-              <ArrowUpIcon className="w-4 h-4 group-hover:-translate-y-1 transition-transform duration-300" />
+              <span className="text-sm font-medium">Top</span>
+              <ArrowUpIcon className="w-4 h-4" />
             </motion.button>
           </motion.div>
 
-          {/* Legal Disclaimer */}
-          <motion.div 
-            variants={itemVariants}
-            className="mt-8 pt-6 border-t border-gray-800 text-center"
-          >
-            <p className="text-xs text-gray-500 leading-relaxed max-w-4xl mx-auto">
-              <strong>Legal Disclaimer:</strong> This website is for informational purposes only and does not constitute legal advice. 
-              The information provided should not be used as a substitute for competent legal advice from a licensed professional attorney. 
-              Contacting Adv. Jigisha T. Sailor through this website does not create an attorney-client relationship. 
-              Please do not send any confidential information until an attorney-client relationship has been established.
-            </p>
-          </motion.div>
         </motion.div>
       </div>
-
-      {/* Back to Top Floating Button */}
-      <motion.button
-        onClick={scrollToTop}
-        className="fixed bottom-8 right-8 w-14 h-14 bg-gradient-gold rounded-full shadow-lg hover:shadow-xl flex items-center justify-center z-50 hover:scale-110 transition-all duration-300"
-        whileHover={{ scale: 1.1, y: -2 }}
-        whileTap={{ scale: 0.9 }}
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3, delay: 1 }}
-        aria-label="Scroll to top"
-      >
-        <ArrowUpIcon className="w-6 h-6 text-white" />
-      </motion.button>
     </footer>
   );
 };
