@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { 
@@ -7,44 +7,13 @@ import {
   TrophyIcon,
   ScaleIcon,
   HeartIcon,
-  SparklesIcon
+  SparklesIcon,
+  UserGroupIcon,
+  ChartBarIcon
 } from '@heroicons/react/24/outline';
 
 const About = () => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.5 }
-    }
-  };
-
+  // Timeline data
   const timeline = [
     {
       year: "2008",
@@ -90,28 +59,231 @@ const About = () => {
     }
   ];
 
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1
+  });
+
+  const [statsRef, statsInView] = useInView({
+    triggerOnce: true,
+    threshold: 0.3
+  });
+
+  const [animatedStats, setAnimatedStats] = useState({
+    experience: 0,
+    cases: 0,
+    successRate: 0,
+    womenEmpowered: 0
+  });
+
   const achievements = [
     {
-      number: "15+",
+      key: 'experience',
+      target: 15,
       label: "Years of Experience",
-      description: "Dedicated legal practice"
+      description: "Dedicated legal practice",
+      icon: CalendarIcon,
+      color: "from-blue-500 to-blue-600",
+      bgColor: "from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20",
+      textColor: "text-blue-600 dark:text-blue-400"
     },
     {
-      number: "500+",
+      key: 'cases',
+      target: 500,
       label: "Cases Handled",
-      description: "Successful resolutions"
+      description: "Successful resolutions",
+      icon: ChartBarIcon,
+      color: "from-green-500 to-green-600",
+      bgColor: "from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20",
+      textColor: "text-green-600 dark:text-green-400"
     },
     {
-      number: "95%",
+      key: 'successRate',
+      target: 95,
       label: "Success Rate",
-      description: "Proven track record"
+      description: "Proven track record",
+      icon: TrophyIcon,
+      color: "from-yellow-500 to-yellow-600",
+      bgColor: "from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-800/20",
+      textColor: "text-yellow-600 dark:text-yellow-400"
     },
     {
-      number: "100+",
+      key: 'womenEmpowered',
+      target: 150,
       label: "Women Empowered",
-      description: "Free legal aid provided"
+      description: "Free legal aid provided",
+      icon: UserGroupIcon,
+      color: "from-purple-500 to-purple-600",
+      bgColor: "from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20",
+      textColor: "text-purple-600 dark:text-purple-400"
     }
   ];
+
+  useEffect(() => {
+    if (statsInView) {
+      achievements.forEach((achievement, index) => {
+        const duration = 800; // Reduced from 2000ms to 800ms
+        const steps = 40; // Reduced from 60 to 40 steps
+        const stepValue = achievement.target / steps;
+        const stepDuration = duration / steps;
+
+        let currentValue = 0;
+        const timer = setInterval(() => {
+          currentValue += stepValue;
+          if (currentValue >= achievement.target) {
+            currentValue = achievement.target;
+            clearInterval(timer);
+          }
+
+          setAnimatedStats(prev => ({
+            ...prev,
+            [achievement.key]: Math.floor(currentValue)
+          }));
+        }, stepDuration + (index * 50)); // Reduced stagger from 100ms to 50ms
+
+        return () => clearInterval(timer);
+      });
+    }
+  }, [statsInView]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.5 }
+    }
+  };
+
+  // Timeline Item Component with individual scroll trigger
+  const TimelineItem = ({ item, index }) => {
+    const [timelineRef, timelineInView] = useInView({
+      triggerOnce: true,
+      threshold: 0.6
+    });
+
+    return (
+      <motion.div
+        ref={timelineRef}
+        className={`flex items-start space-x-8 ${
+          index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+        }`}
+        initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100, scale: 0.8 }}
+        animate={timelineInView ? { 
+          opacity: 1, 
+          x: 0, 
+          scale: 1 
+        } : { 
+          opacity: 0, 
+          x: index % 2 === 0 ? -100 : 100, 
+          scale: 0.8 
+        }}
+        transition={{ 
+          duration: 0.8, 
+          ease: "easeOut",
+          type: "spring",
+          stiffness: 100
+        }}
+      >
+        {/* Timeline Dot */}
+        <div className="relative flex-shrink-0">
+          <motion.div 
+            className="w-16 h-16 bg-white dark:bg-charcoal-900 border-4 border-gold-500 rounded-full flex items-center justify-center shadow-lg"
+            initial={{ scale: 0, rotate: -180 }}
+            animate={timelineInView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={timelineInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.3, delay: 0.6 }}
+            >
+              <item.icon className="w-8 h-8 text-gold-600" />
+            </motion.div>
+          </motion.div>
+          
+          {/* Year Badge */}
+          <motion.div 
+            className="absolute -top-2 -right-2 bg-gradient-gold text-white text-xs font-bold px-2 py-1 rounded-full"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={timelineInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+            transition={{ duration: 0.4, delay: 0.8 }}
+          >
+            {item.year}
+          </motion.div>
+        </div>
+        
+        {/* Content */}
+        <motion.div
+          className={`flex-1 ${
+            index % 2 === 0 ? 'md:text-left' : 'md:text-right'
+          }`}
+          initial={{ opacity: 0, y: 50 }}
+          animate={timelineInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <div className={`card p-6 max-w-md ${
+            index % 2 === 0 ? 'md:ml-0' : 'md:ml-auto'
+          } hover:shadow-xl transition-all duration-300`}>
+            <motion.div 
+              className={`flex items-center space-x-2 mb-3 ${
+                index % 2 === 0 ? '' : 'md:justify-end'
+              }`}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+              animate={timelineInView ? { opacity: 1, x: 0 } : { opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
+              <span className={`px-3 py-1 text-xs font-medium rounded-full ${
+                item.type === 'education' 
+                  ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300'
+                  : item.type === 'career'
+                  ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300'
+                  : 'bg-gold-100 dark:bg-gold-900/30 text-gold-800 dark:text-gold-300'
+              }`}>
+                {item.type}
+              </span>
+            </motion.div>
+            <motion.h4 
+              className="text-lg font-semibold text-charcoal-900 dark:text-white mb-2"
+              initial={{ opacity: 0 }}
+              animate={timelineInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.4, delay: 0.7 }}
+            >
+              {item.title}
+            </motion.h4>
+            <motion.p 
+              className="text-charcoal-600 dark:text-charcoal-400 text-sm leading-relaxed"
+              initial={{ opacity: 0 }}
+              animate={timelineInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.4, delay: 0.8 }}
+            >
+              {item.description}
+            </motion.p>
+          </div>
+        </motion.div>
+      </motion.div>
+    );
+  };
 
   return (
     <section 
@@ -184,21 +356,39 @@ const About = () => {
             </div>
 
             {/* Achievement Stats */}
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-6" ref={statsRef}>
               {achievements.map((achievement, index) => (
                 <motion.div
                   key={index}
                   variants={cardVariants}
                   whileHover={{ scale: 1.05, y: -5 }}
-                  className="card text-center p-6 card-hover"
+                  className={`bg-gradient-to-br ${achievement.bgColor} rounded-2xl p-6 text-center border border-white/20 dark:border-gray-700/30 shadow-lg hover:shadow-xl transition-all duration-300`}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={statsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                  transition={{ duration: 0.6, delay: index * 0.2 }}
                 >
-                  <div className="text-3xl font-bold text-gradient mb-2">
-                    {achievement.number}
-                  </div>
-                  <h4 className="font-semibold text-charcoal-900 dark:text-white mb-1">
+                  <motion.div 
+                    className={`w-16 h-16 bg-gradient-to-r ${achievement.color} rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg`}
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <achievement.icon className="w-8 h-8 text-white" />
+                  </motion.div>
+                  
+                  <motion.div 
+                    className={`text-4xl font-bold ${achievement.textColor} mb-2`}
+                    key={animatedStats[achievement.key]}
+                    initial={{ scale: 1.2 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {animatedStats[achievement.key]}{achievement.key === 'successRate' ? '%' : '+'}
+                  </motion.div>
+                  
+                  <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-1 text-lg">
                     {achievement.label}
                   </h4>
-                  <p className="text-sm text-charcoal-600 dark:text-charcoal-400">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     {achievement.description}
                   </p>
                 </motion.div>
@@ -278,58 +468,7 @@ const About = () => {
               
               <div className="space-y-8">
                 {timeline.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    variants={itemVariants}
-                    className={`flex items-start space-x-8 ${
-                      index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                    }`}
-                  >
-                    {/* Timeline Dot */}
-                    <div className="relative flex-shrink-0">
-                      <div className="w-16 h-16 bg-white dark:bg-charcoal-900 border-4 border-gold-500 rounded-full flex items-center justify-center shadow-lg">
-                        <item.icon className="w-8 h-8 text-gold-600" />
-                      </div>
-                      
-                      {/* Year Badge */}
-                      <div className="absolute -top-2 -right-2 bg-gradient-gold text-white text-xs font-bold px-2 py-1 rounded-full">
-                        {item.year}
-                      </div>
-                    </div>
-                    
-                    {/* Content */}
-                    <motion.div
-                      className={`flex-1 ${
-                        index % 2 === 0 ? 'md:text-left' : 'md:text-right'
-                      }`}
-                      whileHover={{ x: index % 2 === 0 ? 10 : -10 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <div className={`card p-6 max-w-md ${
-                        index % 2 === 0 ? 'md:ml-0' : 'md:ml-auto'
-                      }`}>
-                        <div className={`flex items-center space-x-2 mb-3 ${
-                          index % 2 === 0 ? '' : 'md:justify-end'
-                        }`}>
-                          <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                            item.type === 'education' 
-                              ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300'
-                              : item.type === 'career'
-                              ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300'
-                              : 'bg-gold-100 dark:bg-gold-900/30 text-gold-800 dark:text-gold-300'
-                          }`}>
-                            {item.type}
-                          </span>
-                        </div>
-                        <h4 className="text-lg font-semibold text-charcoal-900 dark:text-white mb-2">
-                          {item.title}
-                        </h4>
-                        <p className="text-charcoal-600 dark:text-charcoal-400 text-sm leading-relaxed">
-                          {item.description}
-                        </p>
-                      </div>
-                    </motion.div>
-                  </motion.div>
+                  <TimelineItem key={index} item={item} index={index} />
                 ))}
               </div>
             </div>
