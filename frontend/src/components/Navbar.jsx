@@ -81,7 +81,7 @@ const Navbar = () => {
     <motion.nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
-          ? 'bg-white/95 dark:bg-charcoal-950/95 backdrop-blur-md shadow-lg' 
+          ? 'bg-black/80 dark:bg-charcoal-950/95 backdrop-blur-md shadow-lg' 
           : 'bg-transparent'
       }`}
       variants={navbarVariants}
@@ -100,7 +100,7 @@ const Navbar = () => {
               <ScaleIcon className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl lg:text-xl font-playfair font-bold text-charcoal-900 dark:text-white leading-tight">
+              <h1 className="text-xl lg:text-xl font-playfair font-bold text-white leading-tight">
                 Jigisha T. Sailor
               </h1>
               <p className="text-xs text-gold-600 dark:text-gold-400 font-medium tracking-wide">
@@ -115,7 +115,7 @@ const Navbar = () => {
               <motion.button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="nav-link text-sm font-medium py-1 px-1"
+                className="text-sm font-medium py-1 px-1 text-white dark:text-charcoal-300 hover:text-gold-400 transition-colors duration-300"
                 variants={linkVariants}
                 whileHover="hover"
                 initial={{ opacity: 0, y: -20 }}
@@ -134,7 +134,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-3">
               <motion.a
                 href="tel:+91XXXXXXXXX"
-                className="flex items-center space-x-1 text-xs font-medium text-charcoal-700 dark:text-charcoal-300 hover:text-gold-500 transition-colors duration-300 py-1 px-2 rounded-lg hover:bg-gray-50 dark:hover:bg-charcoal-800"
+                className="flex items-center space-x-1 text-xs font-medium text-white dark:text-charcoal-300 hover:text-gold-400 transition-colors duration-300 py-1 px-2 rounded-lg hover:bg-white/10 dark:hover:bg-charcoal-800"
                 whileHover={{ scale: 1.05 }}
                 aria-label="Call Advocate Jigisha T. Sailor"
               >
@@ -144,7 +144,7 @@ const Navbar = () => {
               
               <motion.a
                 href="mailto:jigisha.sailor@gmail.com"
-                className="flex items-center space-x-1 text-xs font-medium text-charcoal-700 dark:text-charcoal-300 hover:text-gold-500 transition-colors duration-300 py-1 px-2 rounded-lg hover:bg-gray-50 dark:hover:bg-charcoal-800"
+                className="flex items-center space-x-1 text-xs font-medium text-white dark:text-charcoal-300 hover:text-gold-400 transition-colors duration-300 py-1 px-2 rounded-lg hover:bg-white/10 dark:hover:bg-charcoal-800"
                 whileHover={{ scale: 1.05 }}
                 aria-label="Email Advocate Jigisha T. Sailor"
               >
@@ -180,7 +180,7 @@ const Navbar = () => {
                     exit={{ rotate: -90, opacity: 0 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <MoonIcon className="w-4 h-4 text-charcoal-700" />
+                    <MoonIcon className="w-4 h-4 text-white" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -218,14 +218,14 @@ const Navbar = () => {
               {isDarkMode ? (
                 <SunIcon className="w-4 h-4 text-gold-500" />
               ) : (
-                <MoonIcon className="w-4 h-4 text-charcoal-700" />
+                <MoonIcon className="w-4 h-4 text-white" />
               )}
             </motion.button>
 
             {/* Mobile Menu Toggle */}
             <motion.button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg text-charcoal-700 dark:text-charcoal-300 hover:text-gold-500 hover:bg-gray-100 dark:hover:bg-charcoal-800 transition-colors duration-300 border border-gray-200 dark:border-charcoal-700"
+              className="p-2 rounded-lg text-white dark:text-charcoal-300 hover:text-gold-400 hover:bg-white/10 dark:hover:bg-charcoal-800 transition-colors duration-300 border border-white/20 dark:border-charcoal-700"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               aria-label="Toggle mobile menu"
@@ -272,7 +272,7 @@ const Navbar = () => {
                   <motion.button
                     key={item.name}
                     onClick={() => scrollToSection(item.href)}
-                    className="block w-full text-left px-4 py-3 text-base font-medium text-charcoal-700 dark:text-charcoal-300 hover:text-gold-500 hover:bg-gray-50 dark:hover:bg-charcoal-800 rounded-md transition-colors duration-300"
+                    className="block w-full text-left px-4 py-3 text-base font-medium text-white dark:text-charcoal-300 hover:text-gold-400 hover:bg-white/10 dark:hover:bg-charcoal-800 rounded-md transition-colors duration-300"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -286,14 +286,14 @@ const Navbar = () => {
                   <div className="space-y-2">
                     <a
                       href="tel:+91XXXXXXXXX"
-                      className="flex items-center space-x-2 text-sm text-charcoal-700 dark:text-charcoal-300 hover:text-gold-500"
+                      className="flex items-center space-x-2 text-sm text-white dark:text-charcoal-300 hover:text-gold-400"
                     >
                       <PhoneIcon className="w-4 h-4" />
                       <span>+91-XXXXX-XXXXX</span>
                     </a>
                     <a
                       href="mailto:jigisha.sailor@gmail.com"
-                      className="flex items-center space-x-2 text-sm text-charcoal-700 dark:text-charcoal-300 hover:text-gold-500"
+                      className="flex items-center space-x-2 text-sm text-white dark:text-charcoal-300 hover:text-gold-400"
                     >
                       <EnvelopeIcon className="w-4 h-4" />
                       <span>jigisha.sailor@gmail.com</span>
